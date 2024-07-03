@@ -1,140 +1,191 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'base.html' %}
 
-    <title>Java with kay</title>
-    <!-- Include your CSS and other meta tags here -->
-    <style>
-        .container {
-            display: flex;
-        }
+{% block title %}Java with Kay{% endblock %}
+
+{% block extra_head %}
+<style>
+    .container {
+        display: flex;
+        flex-wrap: wrap; /* Allow flex items to wrap on smaller screens */
+    }
+    .side-menu {
+        flex: 1;
+        background-color: #f5f5f5; /* Set the background color of the side menu */
+        overflow-y: auto; /* Enable vertical scrolling */
+        max-height: 100vh; /* Set a maximum height to the side menu */
+        padding: 10px; /* Add padding for better appearance */
+        box-sizing: border-box; /* Ensure padding is included in width/height calculations */
+        min-width: 250px; /* Ensure a minimum width for the side menu */
+        border-right: 1px solid #ddd;
+        transition: transform 0.3s ease; /* Smooth transition for slide-in effect */
+        position: fixed; /* Fix the side menu position */
+        left: 0; /* Align it to the left */
+        top: 0; /* Align it to the top */
+        height: 100%; /* Full height */
+    }
+    .content {
+        flex: 3;
+        padding: 20px; /* Add padding to the content area */
+        min-width: 0; /* Prevent content from shrinking too much */
+        width: calc(100% - 250px); /* Ensure content takes full width on smaller screens */
+        margin-left: 250px; /* Adjust margin to accommodate fixed side menu */
+    }
+    .side-menu h3 {
+        background-color: #fff;
+        margin: 0;
+        padding: 10px;
+        font-family: Arial, sans-serif;
+        font-size: 18px;
+        font-weight: bold;
+        border-bottom: 1px solid #ddd;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .side-menu h3:hover {
+        background-color: #e0e0e0;
+    }
+    .side-menu a {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+    .side-menu input {
+        width: calc(100% - 20px); /* Ensure input takes full width */
+        margin-bottom: 10px;
+        padding: 10px;
+        font-size: 16px;
+        box-sizing: border-box;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    .menu-icon {
+        display: none; /* Hide menu icon by default */
+        font-size: 30px;
+        cursor: pointer;
+        margin: 10px; /* Increase margin to create space */
+        position: absolute;
+        right: 20px; /* Adjust right position to move away from the header */
+        z-index: 1000; /* Ensure it appears above other content */
+    }
+    header {
+        width: 100%; /* Full width */
+        background-color: #333;
+        color: white;
+        text-align: center;
+        padding: 20px 0;
+        position: relative;
+    }
+    .header-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .header-text {
+        font-weight: bold;
+        font-style: italic;
+        font-size: 24px;
+    }
+    .social-icons a {
+        color: white;
+        margin: 0 10px;
+        font-size: 20px;
+    }
+
+    @media (max-width: 768px) {
         .side-menu {
-            flex: 1;
-            background-color:whitesmoke; /* Set the background color of the side menu */
-            overflow-y: auto; /* Enable vertical scrolling */
-            max-height: 100vh; /* Set a maximum height to the side menu */
-            padding-right: 10px; /* Add some padding for the scrollbar width */
+            display: none; /* Hide the side menu by default on mobile */
+            position: fixed;
+            width: 100%;
+            left: 0;
+            top: 0;
+            background-color: #f5f5f5;
+            z-index: 1000;
+        }
+        .side-menu.show {
+            display: block;
         }
         .content {
-            flex: 3;
-            padding: 20px; /* Add padding to the content area */
+            width: 100%;
+            margin-left: 0;
         }
-        .side-menu::-webkit-scrollbar {
-            width: 8px;
+        .menu-icon {
+            display: block;
+            top: 60px; /* Adjust top position to be below the header */
         }
-        .side-menu::-webkit-scrollbar-thumb {
-            background-color: #888;
-            border-radius: 4px;
-        }
-        .side-menu::-webkit-scrollbar-thumb:hover {
-            background-color: #555;
-        }
-        .side-menu::-webkit-scrollbar-button {
-            background-color: #acafad;
-        }
-        .side-menu::-webkit-scrollbar-button:hover {
-            background-color: #888;
-        }
-        .side-menu {
-           scroll-behavior: smooth;
-        }
-        .side-menu h3 {
-            background-color: #f5f5f5;
-        }
-        .side-menu h3:hover {
-            background-color: #e0e0e0;
-        }
-        .side-menu h3 {
-            font-family: 'Arial', sans-serif;
-            font-size: 18px;
-            font-weight: bold;
-        }
-        .side-menu h3:not(:last-child) {
-            border-bottom: 1px solid #ddd;
-        }
- 
+    }
+</style>
+{% endblock %}
 
-
-
-
-
-
-
-    </style>
-
-</head>
-<body>
-    {% extends 'base.html' %}
-
-    {% block content %}
-    <div class="container">
-        <div class="side-menu" id="side-menu">
-            <input type="text" id="search-input" placeholder="Search...">
-            <h3 class="list-group-item"><a href="{% url 'main' %}">Introduction to Java</a></h3>
-            <h3 class="list-group-item"><a href="{% url 'datatypes' %}">Data Types</a></h3>
-            <h3 class="list-group-item"><a href="{% url 'datastorage' %}">Data Storage</a></h3>
-            <h3 class="list-group-item"><a href="{% url 'classes' %}">Classes</a></h3>
-            <h3 class="list-group-item"><a href="{% url 'objects' %}">Objects</a></h3>
-            <h3 class="list-group-item"><a href="{% url 'visibility' %}">Visibility Modifiers</a></h3>
-            <h3 class="list-group-item"><a href="{% url 'constructors' %}">Constructors</a></h3>
-            <h3 class="list-group-item"><a href="{% url 'arrays' %}">Arrays</a></h3>
-            <h3 class="list-group-item"><a href="{% url 'program' %}">Program flow control</a></h3>
-            <h3 class="list-group-item"><a href="{% url 'inherritance' %}">Inherritence</a></h3>
-            <h3 class="list-group-item"><a href="{% url 'input' %}">Input</a></h3>
-            <h3 class="list-group-item"><a href="{% url 'polymorphism' %}">Polymorphism</a></h3>
-            <h3 class="list-group-item"><a href="{% url 'abstraction' %}">Abstraction</a></h3>
-            <h3 class="list-group-item"><a href="{% url 'interfaces' %}">Interfaces</a></h3>
-            <h3 class="list-group-item"><a href="{% url 'exception' %}">Exception Handling</a></h3>
-            <h3 class="list-group-item"><a href="{% url 'immutability' %}">Immutability</a></h3>
-            <h3 class="list-group-item"><a href="{% url 'interning' %}">Object Interning</a></h3>
-            <h3 class="list-group-item"><a href="{% url 'chaining' %}">Constructor Chaining</a></h3>
-            <h3 class="list-group-item"><a href="{% url 'binding' %}">Dynamic Binding</a></h3>
-            <h3 class="list-group-item"><a href="{% url 'generic' %}">Generic Classes</a></h3>
-            <h3 class="list-group-item"><a href="{% url 'clone' %}">Object Clonning</a></h3>
-            <h3 class="list-group-item"><a href="{% url 'casting' %}">Object Casting</a></h3>
-            <h3 class="list-group-item"><a href="{% url 'inner' %}">Inner Classes</a></h3>
-            <h3 class="list-group-item"><a href="{% url 'serialize' %}">Object Serialization</a></h3>
-            <h3 class="list-group-item"><a href="{% url 'deserialize' %}">Object Deserialization</a></h3>
-
-
-
-            
-
-
+{% block content %}
+<div class="container">
+    <header>
+        <div class="header-content">
+            <h2 class="header-text">
+                JAVA WITH KAY  <i class="fab fa-java"></i>
+            </h2>
+            <p class="menu-icon" id="menu-icon">☰ </p><!-- Menu icon for mobile -->
         </div>
-
-        <div class="content">
-            {% block side_menu_content %}{% endblock %}
-        </div>
+    </header>
+    <div class="content">
+        {% block side_menu_content %}{% endblock %}
     </div>
 
-    <!-- Include your JavaScript scripts here -->
-    <script>
-        const sideMenu = document.getElementById("side-menu");
-        const searchInput = document.getElementById("search-input");
-    
-        function filterMenuItems(searchTerm) {
-            const menuItems = sideMenu.querySelectorAll("h3");
-    
-            menuItems.forEach(item => {
-                const menuItemText = item.textContent.toLowerCase();
-                if (menuItemText.includes(searchTerm)) {
-                    item.style.display = "block";
-                } else {
-                    item.style.display = "none";
-                }
-            });
-        }
-    
-        searchInput.addEventListener("input", () => {
-            const searchTerm = searchInput.value.toLowerCase();
-            filterMenuItems(searchTerm);
-        });
-    </script>
-    
-    {% endblock %}
+    <div class="side-menu" id="side-menu">
+        <input type="text" id="search-input" placeholder="Search...">
+        <h3 class="list-group-item"><a href="{% url 'main' %}">Introduction to Java</a></h3>
+        <h3 class="list-group-item"><a href="{% url 'datatypes' %}">Data Types</a></h3>
+        <h3 class="list-group-item"><a href="{% url 'datastorage' %}">Data Storage</a></h3>
+        <h3 class="list-group-item"><a href="{% url 'classes' %}">Classes</a></h3>
+        <h3 class="list-group-item"><a href="{% url 'objects' %}">Objects</a></h3>
+        <h3 class="list-group-item"><a href="{% url 'visibility' %}">Visibility Modifiers</a></h3>
+        <h3 class="list-group-item"><a href="{% url 'constructors' %}">Constructors</a></h3>
+        <h3 class="list-group-item"><a href="{% url 'arrays' %}">Arrays</a></h3>
+        <h3 class="list-group-item"><a href="{% url 'program' %}">Program flow control</a></h3>
+        <h3 class="list-group-item"><a href="{% url 'inherritance' %}">Inheritance</a></h3>
+        <h3 class="list-group-item"><a href="{% url 'input' %}">Input</a></h3>
+        <h3 class="list-group-item"><a href="{% url 'polymorphism' %}">Polymorphism</a></h3>
+        <h3 class="list-group-item"><a href="{% url 'abstraction' %}">Abstraction</a></h3>
+        <h3 class="list-group-item"><a href="{% url 'interfaces' %}">Interfaces</a></h3>
+        <h3 class="list-group-item"><a href="{% url 'exception' %}">Exception Handling</a></h3>
+        <h3 class="list-group-item"><a href="{% url 'immutability' %}">Immutability</a></h3>
+        <h3 class="list-group-item"><a href="{% url 'interning' %}">Object Interning</a></h3>
+        <h3 class="list-group-item"><a href="{% url 'chaining' %}">Constructor Chaining</a></h3>
+        <h3 class="list-group-item"><a href="{% url 'binding' %}">Dynamic Binding</a></h3>
+        <h3 class="list-group-item"><a href="{% url 'generic' %}">Generic Classes</a></h3>
+        <h3 class="list-group-item"><a href="{% url 'clone' %}">Object Cloning</a></h3>
+        <h3 class="list-group-item"><a href="{% url 'casting' %}">Object Casting</a></h3>
+        <h3 class="list-group-item"><a href="{% url 'inner' %}">Inner Classes</a></h3>
+        <h3 class="list-group-item"><a href="{% url 'serialize' %}">Object Serialization</a></h3>
+        <h3 class="list-group-item"><a href="{% url 'deserialize' %}">Object Deserialization</a></h3>
+    </div>
+</div>
 
-</body>
-</html>
+<!-- Include your JavaScript scripts here -->
+<script>
+    const sideMenu = document.getElementById("side-menu");
+    const menuIcon = document.getElementById("menu-icon");
+    const searchInput = document.getElementById("search-input");
+
+    menuIcon.addEventListener("click", () => {
+        sideMenu.classList.toggle("show");
+    });
+
+    function filterMenuItems(searchTerm) {
+        const menuItems = sideMenu.querySelectorAll("h3");
+
+        menuItems.forEach(item => {
+            const menuItemText = item.textContent.toLowerCase();
+            if (menuItemText.includes(searchTerm)) {
+                item.style.display = "block";
+            } else {
+                item.style.display = "none";
+            }
+        });
+    }
+
+    searchInput.addEventListener("input", () => {
+        const searchTerm = searchInput.value.toLowerCase();
+        filterMenuItems(searchTerm);
+    });
+</script>
+{% endblock %}

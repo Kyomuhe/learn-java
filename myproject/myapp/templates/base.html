@@ -4,39 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}JAVA WITH KAY{% endblock %}</title>
+    <!-- Include Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!-- Include your CSS and other meta tags here -->
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            position: relative;
+        }
+        .header-text {
+            font-weight: bold;
+            font-style: italic;
+            font-size: 24px;
+        }
+        .social-icons a {
+            color: white;
+            margin: 0 10px;
+            font-size: 20px;
+        }
         .footer {
-            flex-shrink: 0;
             background-color: #333;
             color: white;
             text-align: center;
             padding: 10px;
         }
-        .header-text {
-        font-weight: bold;
-        font-style: italic;
-    }
-
     </style>
+    {% block extra_head %}{% endblock %}
 </head>
 <body>
-    <header>
-        <h2 class="header-text">JAVA WITH KAY</h2>
-
-    </header>
-
-
     <main>
         {% block content %}{% endblock %}
     </main>
+
     <div class="footer">
-        Every line of code is made more simpler.
-        <p>by precious kay software limited</p>
+        <p>Every line of code is made more simpler</p>
+        <p>© 2024 Precious Kay. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="mailto:kyomuhendopreciouskay@gmail.com" class="text-white mr-2"><i class="fas fa-envelope"></i></a>
+            <a href="https://twitter.com/preciouskay84" class="text-white mr-2"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.linkedin.com/in/kyomuhendo-precious-35b685254/" class="text-white"><i class="fab fa-linkedin-in"></i></a>
+        </div>
     </div>
 
-
-
+    <!-- jQuery and Bootstrap scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- Include your JavaScript scripts here -->
+    {% block extra_scripts %}{% endblock %}
 </body>
 </html>
